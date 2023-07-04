@@ -1,0 +1,43 @@
+.disply_none{
+    display:none;
+}
+.my-icon {
+    --sds-c-icon-color-foreground-default: red;
+}
+
+.my-check_icon {
+    --sds-c-icon-color-foreground-default: green;
+}
+.slds-checkbox{
+    --slds-c-checkbox-mark-color-foreground:green;
+}
+
+.align_center{
+    text-align:center;
+}
+.slds-form-element__control {
+    margin-top: -20px !important;
+}
+.button-container lightning-button {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
+}
+.button_css  {
+    box-shadow: 0px 1px 4px -1px;
+    background-color: #ffffff;
+    border: 1px solid #b7b7b7;
+    color: #0370b9;
+    padding: 4px 17px;
+    text-align: center;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-left: 8px;
+}
+.spins::after {
+    position: absolute;
+    content: 'Scorecard data loading...';
+    width: 100%;
+    text-align: center;
+    top: calc(50% + 3em);
+    font-weight: bold;
+}

@@ -1,0 +1,58 @@
+<template>
+    <lightning-card>
+        <lightning-accordion allow-multiple-sections-open onsectiontoggle={handleSectionToggle}
+            active-section-name={activeSections}>
+
+            <!--Hrs-->
+            <lightning-accordion-section name="A" label="Human Resources" class="background_color">
+                <lightning-accordion-section name="A" label="Onboarding Process" class="inner_background">
+                    <c-score-card-component record-id={recordId}></c-score-card-component>
+                </lightning-accordion-section>
+                <lightning-accordion-section name="A" label="I-9 Process" class="inner_background">
+                    <c-score-card-component record-id={recordId}></c-score-card-component>
+                </lightning-accordion-section>
+                <lightning-accordion-section name="A" label="H1B Process" class="inner_background">
+                    <c-score-card-component record-id={recordId}></c-score-card-component>
+                </lightning-accordion-section>
+                <lightning-accordion-section name="A" label="Employment Lifecycle" class="inner_background">
+                    <c-score-card-component record-id={recordId}></c-score-card-component>
+                </lightning-accordion-section>
+
+            </lightning-accordion-section>
+
+            <!--Operation-->
+            <lightning-accordion-section name="B" label="Operations" class="background_color">
+
+                <lightning-accordion-section name="B" label="Inspections" class="inner_background">
+                    <c-score-card-component record-id={recordId}></c-score-card-component>
+                </lightning-accordion-section>
+
+                <lightning-accordion-section name="B" label="Certifications" class="inner_background">
+                    <c-score-card-component record-id={recordId}></c-score-card-component>
+                </lightning-accordion-section>
+
+                <lightning-accordion-section name="B" label="Mill Test Reports" class="inner_background">
+                    <c-score-card-component record-id={recordId}></c-score-card-component>
+                </lightning-accordion-section>
+
+            </lightning-accordion-section>
+
+
+            <!--Fincancial-->
+            <lightning-accordion-section name="C" label="Financial" class="background_color">
+
+                <lightning-accordion-section name="C" label="Claims Process" class="inner_background">
+                    <c-score-card-component record-id={recordId}></c-score-card-component>
+                </lightning-accordion-section>
+
+                <lightning-accordion-section name="C" label="Vender Certification Process" class="inner_background">
+                    <c-score-card-component record-id={recordId}></c-score-card-component>
+                </lightning-accordion-section>
+
+            </lightning-accordion-section>
+
+        </lightning-accordion>
+
+
+    </lightning-card>
+</template>

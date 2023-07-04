@@ -1,0 +1,380 @@
+<template>
+	<!--<lightning-card>-->
+	<template if:true={showSpinner}>
+		< size="medium" class="spins"></ lightning-spinner>
+	</template>
+	<lightning-layout
+		style="background-color:rgb(173 192 191);color: rgb(8, 8, 8);font-size:13.5px;border-bottom: 1px solid white;">
+		<lightning-layout-item padding="around-small" flexibility="auto,shrink" size="6" title="Name">
+			<div class="slds-truncate slds-wrap slds-text-align_left"><b>Name</b></div>
+		</lightning-layout-item>
+
+		<lightning-layout-item padding="around-small" flexibility="auto,shrink" size="2" title="Document Count">
+			<div class="slds-truncate slds-wrap slds-text-align_center"><b>Document Count</b></div>
+		</lightning-layout-item>
+
+		<lightning-layout-item padding="around-small" flexibility="auto,shrink" size="2" title="Validation Count">
+			<div class="slds-truncate slds-wrap slds-text-align_center"><b>Validation Count</b></div>
+		</lightning-layout-item>
+
+		<lightning-layout-item padding="around-small" flexibility="auto,shrink" size="2" title="Validation">
+			<div class="slds-truncate slds-wrap slds-text-align_center"><b>Validation</b></div>
+		</lightning-layout-item>
+	</lightning-layout>
+
+	<template if:true={tableData} for:each={tableData} for:item="obj" for:index="index">
+		<!-- <tr class="slds-hint-parent" key={obj.name} style={obj.colorCode} onclick={showChildDocuments}
+						data-target-id={obj.name} data-index-id={index}>
+						<td data-label="Name" title={obj.name}> -->
+		<lightning-layout class="slds-hint-parent" key={obj.name} style={obj.colorCode} onclick={showChildDocuments}
+			data-target-id={obj.name} data-index-id={index}>
+			<lightning-layout-item data-label="Name" class="slds-truncate slds-wrap" title={obj.name}
+				flexibility="auto, shrink" size="6" style="padding:4px;">
+				<div class="slds-truncate slds-wrap">
+					<!-- <template if:false={showChildBlock}>-->
+					<lightning-icon icon-name="utility:chevronright" alternative-text="chevrondown" size="small"
+						style="cursor: pointer;" data-target-id={index}>
+					</lightning-icon>
+					<!-- </template>-->
+					<!-- <template if:true={showChildBlock}> -->
+					<lightning-icon icon-name="utility:chevrondown" alternative-text="chevrondown" size="small"
+						style="cursor: pointer;" data-target-id={index} class="disply_none">
+					</lightning-icon>
+					<!-- </template> -->
+					&nbsp;&nbsp;
+					{obj.name}
+				</div>
+			</lightning-layout-item>
+
+			<lightning-layout-item data-label="totalDocCount" flexibility="auto, shrink" style="padding:4px;">
+				<div class="slds-truncate align_center">{obj.totalDocCount}</div>
+			</lightning-layout-item>
+
+			<lightning-layout-item data-label="validcount" flexibility="auto, shrink" style="padding:4px;">
+				<div class="slds-truncate align_center">{obj.validDocCount}</div>
+
+			</lightning-layout-item>
+			<lightning-layout-item data-label="validcount" class="align_center" flexibility="auto, shrink"
+				style="padding:4px;">
+
+				<template if:true={obj.showCheckBox}>
+					<!--<div class="slds-form-element ">
+                                    <div class="slds-form-element__control">
+                                        <div class="slds-checkbox">
+                                            <input type="checkbox" name="options" value="checkbox-unique-id-80"
+                                                checked={obj.required} />
+                                            <label class="slds-checkbox__label" for="checkbox-unique-id-80">
+                                                <span class="slds-checkbox_faux"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>-->
+					<lightning-icon icon-name="utility:check" alternative-text="close" class="my-check_icon"
+						size="small"></lightning-icon>
+				</template>
+				<template if:false={obj.showCheckBox}>
+
+					<lightning-icon icon-name="utility:close" alternative-text="close" class="my-icon"
+						size="small"></lightning-icon>
+
+				</template>
+			</lightning-layout-item>
+		</lightning-layout>
+
+		<lightning-layout key={obj.name} class="disply_none" data-target-id={obj.name}>
+			<lightning-layout-item size="12" flexibility="auto, shrink">
+				<div>
+					<table class="slds-table_bordered">
+						<thead>
+							<tr data-target-id={obj.name} class="disply_none" style="background-color: #ebeef7;">
+								<td colspan="4" style="padding-top:5px; padding-bottom:5px;">
+									<button class="button_css" onclick={showFormPopup} data-parent={obj.name}>Add
+										Content</button>
+									<button class="button_css" onclick={handleDocuSign} data-parent={obj.name}>
+										DocuSign</button>
+								</td>
+							</tr>
+
+							<tr data-target-id={obj.name} class="disply_none"
+								style="background-color:rgb(207 217 216); color:rgb(12, 12, 12);">
+								<template if:true={obj.iConnectSCResultCategoryDocs}>
+									<template if:true={obj.iConnectSCResultCategoryDocs}
+										for:each={obj.iConnectSCResultCategoryDocs} for:item="docObj">
+										<template if:true={docObj.showColumn}>
+											<!-- <th key={docObj.redirectLink}>
+													<div class="slds-truncate slds-wrap"
+														style="padding-left:35px;padding-top:8px;padding-bottom:8px;">
+														<b>Document Type</b>
+													</div>
+												</th> -->
+										</template>
+									</template>
+									<th>
+										<div class="slds-truncate slds-wrap"
+											style="padding-left:35px;padding-top:8px;padding-bottom:8px;">
+											<b>First Name</b>
+										</div>
+									</th>
+									<th>
+										<div class="slds-truncate slds-wrap"
+											style="padding-left:35px;padding-top:8px;padding-bottom:8px;">
+											<b>Last Name</b>
+										</div>
+									</th>
+									<th>
+										<div class="slds-truncate slds-wrap"
+											style="padding-left:35px;padding-top:8px;padding-bottom:8px;">
+											<b>Emp ID</b>
+										</div>
+									</th>
+									<!--
+										<template if:true={obj.iConnectSCResultCategoryDocs}
+                                        for:each={obj.iConnectSCResultCategoryDocs} for:item="docObj">
+                                        <template if:true={docObj.iConnectSCResultCategoryDocProps}
+                                            for:each={docObj.iConnectSCResultCategoryDocProps} for:item="docObjIn">
+                                            <th key={docObjIn.value}>
+                                                <div class="slds-truncate" style="padding-left:35px;">
+                                                    <b>{docObjIn.name}</b>
+                                                </div>
+                                            </th>
+                                        </template>
+                                    </template>-->
+
+									<th style="text-align:center;">
+										<div class="slds-truncate slds-wrap"
+											style="padding-left:35px;padding-top:8px;padding-bottom:8px;">
+											<b>Type</b>
+										</div>
+									</th>
+								</template>
+								<template if:false={obj.iConnectSCResultCategoryDocs}>
+									<th style="text-align:center;" colspan="4">
+										<div style="background-color:white;color:red;">Currently, no document is
+											available</div>
+									</th>
+								</template>
+							</tr>
+						</thead>
+						<tbody>
+							<template if:true={obj.iConnectSCResultCategoryDocs}
+								for:each={obj.iConnectSCResultCategoryDocs} for:item="docObj">
+								<tr key={docObj.resultId} data-target-id={obj.name} class="disply_none"
+									style="background-color: #ebeef7;">
+									<template if:true={docObj.iConnectSCResultCategoryDocProps}
+										for:each={docObj.iConnectSCResultCategoryDocProps} for:item="docObjIn">
+										<td key={docObjIn.value}>
+											<div class="slds-truncate slds-wrap"
+												style="padding-left:35px;padding-top:8px;padding-bottom:8px;">
+												{docObjIn.value}
+											</div>
+										</td>
+									</template>
+									<td style="text-align:center;">
+										<div class="slds-truncate slds-wrap"
+											style="padding-left:35px;padding-top:8px;padding-bottom:8px;">
+											<a href={docObj.redirectLink} target="_blank">
+												<lightning-icon icon-name={docObj.iconName} alternative-text="pdf"
+													title="Download File" data-target-type={docObj.docType}
+													data-target-id={docObj.resultId}
+													style="cursor:pointer; size: 10px;"></lightning-icon>
+											</a>
+											<!-- <a href={newUrl} target="_blank">
+													<lightning-icon icon-name={docObj.iconName} alternative-text="doc"
+														title="Download File" data-target-type={docObj.docType}
+														data-target-id={docObj.resultId}
+														style="cursor:pointer; size: 10px;"
+														onclick={handleViewDocuments}></lightning-icon>
+												</a> -->
+										</div>
+									</td>
+								</tr>
+							</template>
+						</tbody>
+					</table>
+				</div>
+			</lightning-layout-item>
+		</lightning-layout>
+		<!-- </td>
+					</tr> -->
+	</template>
+	<!-- </tbody>
+		</table> -->
+	<template if:true={showMsg}>
+		<div style="text-align:center;">
+			<lightning-icon icon-name="utility:error" alternative-text="no data"></lightning-icon>
+			BCS credentials are incorrect
+		</div>
+	</template>
+
+	<!--</lightning-card>-->
+
+	<div if:true={showPopup}>
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+			aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+
+			<div class="slds-modal__container">
+				<template if:true={showPopupSpinner}>
+					<lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+				</template>
+				<!-- modal header start -->
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+						title="Close" onclick={getClosePopup}>
+						<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+							size="small"></lightning-icon>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<template if:true={popHeaderEmploy}>
+						<h2 class="slds-text-heading_medium slds-hyphenate">Employee Details</h2>
+					</template>
+					<template if:true={showScan}>
+						<h2 class="slds-text-heading_medium slds-hyphenate">Your reservation(s) are sent to the scanner
+						</h2>
+					</template>
+					<template if:true={showMobileCapture}>
+						<h2 class="slds-text-heading_medium slds-hyphenate">Your notification(s) are sent
+						</h2>
+					</template>
+				</header>
+
+				<!-- modal body start -->
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+					<lightning-card if:true={showPopInformation}>
+						<div style="margin-left:25px; margin-right:22px;">
+							<div class="slds-grid slds-gutters">
+								<div class="slds-col">
+									<lightning-input type="file" onchange={openfileUpload}>
+									</lightning-input>
+
+									<div if:true={fileData}
+										style="padding-top: 0.375rem; padding-bottom: 0.625rem; color:grey;">
+										<a style="margin-right:7px;" href={previewUrl} title="View file"
+											target="_blank">{fileData.filename}</a>
+
+										<lightning-icon icon-name="utility:check" alternative-text="close"
+											class="my-check_icon" size="x-small"></lightning-icon>
+									</div>
+								</div>
+								<div style="margin-top: 1.3125rem;" class="slds-col">
+									<lightning-button label="Reservation Scan" onclick={handleReservationScan}
+										class="slds-m-left_x-small"></lightning-button>
+								</div>
+								<div style="margin-top: 1.3125rem;" class="slds-col">
+									<lightning-button label="Mobile Capture" onclick={handleMobileCapture}
+										class="slds-m-left_x-small"></lightning-button>
+								</div>
+							</div>
+							<lightning-input type="text" data-name="EmployeeLastName" value={record.employeeLastName}
+								label="Employee Last Name">
+							</lightning-input>
+							<lightning-input type="text" data-name="EmployeeFirstName" value={record.employeeFirstName}
+								label="Employee First Name">
+							</lightning-input>
+							<lightning-input type="email" data-name="EmployeeEmail" value={record.employeeEmail}
+								label="Employee Email Id">
+							</lightning-input>
+							<!-- <lightning-input type="text" data-name="SupervisorLastName"
+								value={record.supervisorLastName} label="Supervisor Last Name">
+							</lightning-input>
+							<lightning-input type="text" data-name="SupervisorFirstName"
+								value={record.supervisorFirstName} label="Supervisor First Name">
+							</lightning-input>
+							<lightning-input type="email" data-name="SupervisorEmail" value={record.supervisorEmail}
+								label="Supervisor Email Id">
+							</lightning-input> -->
+							<lightning-combobox data-name="progress" label="Document Type" value={value} read-only
+								options={options}></lightning-combobox>
+							<lightning-input type="date" data-name="DateOfHire" value={record.dateOfHire}
+								label="Date Of Hire"></lightning-input>
+							<lightning-input type="text" data-name="Department" value={record.department}
+								label="Department"></lightning-input>
+							<lightning-input type="date" data-name="DOB" value={record.dob}
+								label="Date Of Birth"></lightning-input>
+						</div>
+					</lightning-card>
+					<lightning-card if:false={showPopInformation}>
+						<div class="slds-grid slds-gutters">
+							<div class="slds-col">
+								<span>Reservation ID:</span>
+							</div>
+							<div class="slds-col">
+								<span>{reservationId}</span>
+							</div>
+						</div>
+						<div class="slds-grid slds-gutters">
+							<div class="slds-col">
+								<span>Display Name:</span>
+							</div>
+							<div class="slds-col">
+								<span>{reservationId} - {bcsId}; {value}</span>
+							</div>
+						</div>
+					</lightning-card>
+				</div>
+
+				<!-- modal footer start-->
+				<footer class="slds-modal__footer">
+					<template if:false={hideButton}>
+						<button class="slds-button slds-button_brand" onclick={handleMobileCapture}>Mobile
+							Capture</button>
+						<button class="slds-button slds-button_brand" onclick={handleReservationScan}>Reservation
+							Scan</button>
+						<button class="slds-button slds-button_brand" onclick={submitData}>Upload</button>
+					</template>
+					<template if:true={hideButton}>
+						<button class="slds-button slds-button_brand" onclick={getClosePopup}>Close</button>
+					</template>
+				</footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</div>
+
+	<div if:true={docSignPopup}>
+		<section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true"
+			aria-describedby="modal-content-id-2" class="slds-modal slds-fade-in-open">
+
+			<div class="slds-modal__container">
+				<template if:true={showPopupSpinner}>
+					<lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+				</template>
+				<!-- modal header start -->
+				<header class="slds-modal__header">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+						title="Close" onclick={getClosePopup}>
+						<lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+							size="small"></lightning-icon>
+						<span class="slds-assistive-text">Close</span>
+					</button>
+					<h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Employee Details</h2>
+				</header>
+
+				<!-- modal body start -->
+				<!-- DocuSign -->
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-2">
+					<lightning-card>
+						<div style="margin-left:100px; margin-right:100px;">
+							<lightning-input data-name="EmployeeID" value={record.empID} label="Emp ID" disabled>
+							</lightning-input>
+							<lightning-input type="text" data-name="EmployeeLastName" value={record.employeeLastName}
+								label="Employee Last Name">
+							</lightning-input>
+							<lightning-input type="text" data-name="EmployeeFirstName" value={record.employeeFirstName}
+								label="Employee First Name">
+							</lightning-input>
+							<lightning-input type="email" data-name="EmployeeEmail" value={record.employeeEmail}
+								label="Employee Email Id">
+							</lightning-input>
+						</div>
+					</lightning-card>
+				</div>
+
+				<!-- modal footer start-->
+				<footer class="slds-modal__footer">
+					<button class="slds-button slds-button_brand" onclick={submitDocuSign}>DocuSign</button>
+				</footer>
+			</div>
+		</section>
+		<div class="slds-backdrop slds-backdrop_open"></div>
+	</div>
+</template>

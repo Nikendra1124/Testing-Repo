@@ -1,0 +1,12 @@
+.background_color{
+    background-color:#f0aec0;
+    border-radius: 6px;
+    margin: 20px;
+    
+}
+.inner_background{
+    background-color: #eb94ab;
+    border-radius: 6px;
+    margin: 20px;
+    border:none;
+}
